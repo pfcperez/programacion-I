@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-
+from shapely.geometry import LineString
 matriz = np.array([[1,2,120],[1,1,90]])
 contribuciones = np.array([50,80])
 
@@ -63,13 +63,37 @@ for a in range(0,contador):
 def connectpoints(x,y,p1,p2):
     x1, x2 = x[p1], x[p2]
     y1, y2 = y[p1], y[p2]
-    plt.plot([x1,x2],[y1,y2],'k-')
+    #print(x1,x2)
+    #print(p1,p2)
+    #idx = np.argwhere(np.diff(np.sign(x2-y2))).flatten()
 
-connectpoints(X,Y,0,1)
-connectpoints(X,Y,2,3)
+    plt.plot([x1,x2],[y1,y2],'k-')
+    return x1,x2,y1,y2
+
+
+x1,x2,y1,y2 = connectpoints(X,Y,0,1)
+x3,x4,y3,y4 = connectpoints(X,Y,2,3)
 plt.axis('equal')
+print("Puntos que se juntan ")
+print(x1,x2)
+print(x3,x4)
+print("Puntos que se juntan ")
+print(y1,y2)
+print(y3,y4)
+#idx = np.argwhere(np.diff(np.sign(x2-y2))).flatten()
+line1 = LineString([(x1,x2),(x3,x4)])
+line2 = LineString([(y1,y2),(y3,y4)])
+intersection = line1.intersection(line2)
+print(line1.length)
+
 plt.show()
 
 """
+respuesta correcta
+X = 60
+Y 29 o 30
+https://www.science-emergence.com/Articles/How-to-write-a-simple-python-code-to-find-the-intersection-point-between-two-straight-lines-/
+https://rosettacode.org/wiki/Find_the_intersection_of_two_lines#Python
+https://shapely.readthedocs.io/en/stable/manual.html#linestrings
 
 """
